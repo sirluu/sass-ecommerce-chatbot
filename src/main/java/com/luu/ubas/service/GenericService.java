@@ -1,13 +1,8 @@
-package com.luu.auth.service;
+package com.luu.ubas.service;
 
 import java.util.List;
-import com.luu.auth.domain.Test;
-import com.luu.auth.domain.User;
+import com.luu.ubas.domain.Test;
 
 public interface GenericService {
-  User findByUsername(String username);
-
-  List<User> findAllUsers();
-
   List<Test> findAllRandomCities();
 }

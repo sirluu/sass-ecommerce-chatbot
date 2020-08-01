@@ -1,4 +1,4 @@
-package com.luu.auth.domain;
+package com.luu.ubas.domain;
 
 import javax.persistence.*;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "random_city")
+@Table(name = "test")
 public class Test {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

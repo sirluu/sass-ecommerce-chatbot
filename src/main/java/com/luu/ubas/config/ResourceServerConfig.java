@@ -1,4 +1,4 @@
-package com.luu.auth.ubas;
+package com.luu.ubas.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
