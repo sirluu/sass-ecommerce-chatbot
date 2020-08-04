@@ -30,21 +30,24 @@ public class RemoteOAuth2ResourceServer extends ResourceServerConfigurerAdapter 
   @Value("${security.oauth2.client.access-token-uri}")
   private String accessTokenUri;
   
+  @Value("${security.oauth2.resource.user-info-uri}")
+  private String userInfoUri;
+  
   @Override
   public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
     resources.resourceId(resourceId);
   }
 
-  @Override
-  public void configure(HttpSecurity http) throws Exception {
-    http.authorizeRequests().anyRequest().authenticated().and().requestMatchers()
-        .antMatchers("/api/**").and().cors();
-  }
+@Override
+public void configure(HttpSecurity http) throws Exception {
+  http.authorizeRequests().anyRequest().authenticated().and().requestMatchers()
+      .antMatchers("/api/v1/**").and().cors();
+}
 
   @Bean
   public RemoteTokenServices remoteTokenServices() {
     RemoteTokenServices remoteTokenServices = new RemoteTokenServices();
-    remoteTokenServices.setCheckTokenEndpointUrl("http://216.194.165.205:5000/oauth/check_token");
+    remoteTokenServices.setCheckTokenEndpointUrl(userInfoUri);
     remoteTokenServices.setClientId(clientId);
     remoteTokenServices.setClientSecret(clientSecret);
     return remoteTokenServices;

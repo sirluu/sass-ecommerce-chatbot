@@ -21,9 +21,9 @@ security:
     client:
       client-id: ubas
       client-secret: ubas
-      access-token-uri: http://216.194.165.205:5000/oauth/token
+      access-token-uri: http://localhost:5000/oauth/token
       grant-type: client_credentials
       scope: server
     resource:
-      user-info-uri: http://216.194.165.205:5000/me
+      user-info-uri: http://localhost:5000/me
       id: ubas
