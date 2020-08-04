@@ -17,8 +17,8 @@ public class ResourceController {
 
   @GetMapping(value = "/test")
   @PreAuthorize("hasAuthority('ADMIN_UBAS') or hasAuthority('USER_UBAS')")
-  public List<Test> getCities() {
-    return service.findAllRandomCities();
+  public List<Test> test() {
+    return service.test();
   }
 
 }

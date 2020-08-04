@@ -4,5 +4,5 @@ import java.util.List;
 import com.luu.ubas.domain.Test;
 
 public interface GenericService {
-  List<Test> findAllRandomCities();
+  List<Test> test();
 }

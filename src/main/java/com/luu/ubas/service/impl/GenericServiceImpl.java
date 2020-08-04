@@ -14,7 +14,7 @@ public class GenericServiceImpl implements GenericService {
   private TestRepository testRepository;
 
   @Override
-  public List<Test> findAllRandomCities() {
+  public List<Test> test() {
     return (List<Test>) testRepository.findAll();
   }
 }
