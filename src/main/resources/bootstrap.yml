@@ -1,4 +1,9 @@
-#debug: true
+server:
+  port: 6000
+  servlet:
+    session:
+      cookie:
+        name: UISESSION
 spring:
   application:
     name: luu-ubas
@@ -11,6 +16,8 @@ spring:
         max-interval: 10000
         multiplier: 2
         max-attempts: 10
+  thymeleaf:
+    cache: false
   jpa:
     open-in-view: true
     database: mysql
@@ -21,16 +28,18 @@ spring:
     oauth2:
       client:
         registration:
-          myclient:
-            client-id: SampleClientId
-            client-secret: tgb.258
-            provider: myoauth
+          custom-client:
+            client-id: luu
+            client-secret: luu
+            client-name: luu-ubas
+            scope: user_info
+            provider: custom-provider
+            redirect-uri: http://localhost:6000/login/oauth2/code
+            client-authentication-method: basic
             authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:6000/login/oauth2/code/myclient
-            client-authentication-method: post
         provider:
-          myoauth:
-            authorization-uri: http://216.194.165.205:5000/oauth/authorize
-            token-uri: http://216.194.165.205:5000/oauth/token
-            user-info-uri: http://216.194.165.205:5000/user/me
-            user-name-attribute: username
+          custom-provider:
+            token-uri: http://216.194.165.205:5000/auth/oauth/token
+            authorization-uri: http://216.194.165.205:5000/auth/oauth/authorize
+            user-info-uri: http://216.194.165.205:5000/auth/user/me
+            user-name-attribute: name
