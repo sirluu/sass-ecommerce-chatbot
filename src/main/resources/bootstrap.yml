@@ -1,5 +1,4 @@
 server:
-  port: 6000
   servlet:
     session:
       cookie:
