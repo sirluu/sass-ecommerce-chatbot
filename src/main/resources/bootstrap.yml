@@ -1,3 +1,4 @@
+#debug: true
 spring:
   application:
     name: luu-ubas
@@ -16,14 +17,20 @@ spring:
     show-sql: false
     hibernate:
       ddl-auto: update # create-drop
-security:
-  oauth2:
-    client:
-      client-id: ubas
-      client-secret: ubas
-      access-token-uri: http://localhost:5000/oauth/token
-      grant-type: client_credentials
-      scope: server
-    resource:
-      user-info-uri: http://localhost:5000/me
-      id: ubas
+  security:
+    oauth2:
+      client:
+        registration:
+          myclient:
+            client-id: SampleClientId
+            client-secret: tgb.258
+            provider: myoauth
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:6000/login/oauth2/code/myclient
+            client-authentication-method: post
+        provider:
+          myoauth:
+            authorization-uri: http://216.194.165.205:5000/oauth/authorize
+            token-uri: http://216.194.165.205:5000/oauth/token
+            user-info-uri: http://216.194.165.205:5000/user/me
+            user-name-attribute: username
