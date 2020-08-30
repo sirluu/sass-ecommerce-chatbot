@@ -1,8 +1,3 @@
-server:
-  servlet:
-    session:
-      cookie:
-        name: UISESSION
 spring:
   application:
     name: luu-ubas
@@ -15,30 +10,27 @@ spring:
         max-interval: 10000
         multiplier: 2
         max-attempts: 10
-  thymeleaf:
-    cache: false
-  jpa:
-    open-in-view: true
-    database: mysql
-    show-sql: false
-    hibernate:
-      ddl-auto: update # create-drop
-  security:
-    oauth2:
-      client:
-        registration:
-          custom-client:
-            client-id: luu
-            client-secret: luu
-            client-name: luu-ubas
-            scope: user_info
-            provider: custom-provider
-            redirect-uri: http://localhost:6000/login/oauth2/code
-            client-authentication-method: basic
-            authorization-grant-type: authorization_code
-        provider:
-          custom-provider:
-            token-uri: http://216.194.165.205:5000/auth/oauth/token
-            authorization-uri: http://216.194.165.205:5000/auth/oauth/authorize
-            user-info-uri: http://216.194.165.205:5000/auth/user/me
-            user-name-attribute: name
+  main:
+    allow-bean-definition-overriding: true
+security:
+  oauth2:
+    client:
+      client-id: luu
+      client-secret: luu
+      access-token-uri: http://216.194.165.205:5000/oauth/token
+      user-authorization-uri: http://216.194.165.205:5000/oauth/authorize
+      grant-type: password
+      scope: user_info
+    resource:
+      token-info-uri: http://216.194.165.205:5000/oauth/check_token
+      user-info-uri: http://216.194.165.205:5000/user/me
+      prefer-token-info: false
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://199.244.51.123:8765/eureka
+logging:
+  level:
+    org.springframework.security: INFO
