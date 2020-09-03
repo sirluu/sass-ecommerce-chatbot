@@ -20,7 +20,7 @@ security:
       access-token-uri: http://216.194.165.205:5000/oauth/token
       user-authorization-uri: http://216.194.165.205:5000/oauth/authorize
       grant-type: password
-      scope: user_info
+#      scope: user_info
     resource:
       token-info-uri: http://216.194.165.205:5000/oauth/check_token
       user-info-uri: http://216.194.165.205:5000/user/me
