@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AccountServiceImpl implements AccountService {
+public class TestServiceImpl implements TestService {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 

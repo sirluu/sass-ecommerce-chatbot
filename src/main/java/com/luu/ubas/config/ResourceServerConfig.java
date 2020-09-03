@@ -12,10 +12,12 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import com.luu.ubas.domain.RoleEnum;
-import com.luu.ubas.service.security.CustomUserInfoTokenServices;
+import com.luu.ubas.service.security.ClientServerTokenServices;
 
 /**
- * @author cdov
+ * 
+ * @author HungLQ7130
+ *
  */
 @Configuration
 @EnableResourceServer
@@ -41,13 +43,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Bean
     public ResourceServerTokenServices tokenServices() {
-        return new CustomUserInfoTokenServices(sso.getUserInfoUri(), sso.getClientId());
+        return new ClientServerTokenServices(sso.getUserInfoUri(), sso.getClientId());
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/test2").permitAll()
-                .antMatchers("/test1").hasAnyAuthority(RoleEnum.ROLE_SUPER.name()).anyRequest().authenticated();
+                .antMatchers("/test4").hasAnyAuthority(RoleEnum.ROLE_SUPER.name())
+                .anyRequest().authenticated();
     }
 }

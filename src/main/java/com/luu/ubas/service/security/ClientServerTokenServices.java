@@ -24,20 +24,16 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 import java.util.*;
 
 /**
- * Extended implementation of
- * {@link org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices}
+ * 
+ * @author HungLQ7130
  *
- * By default, it designed to return only user details. This class provides {@link #getRequest(Map)}
- * method, which returns clientId and scope of calling service. This information used in
- * controller's security checks.
  */
 
-public class CustomUserInfoTokenServices implements ResourceServerTokenServices {
+public class ClientServerTokenServices implements ResourceServerTokenServices {
 
-  protected final Log logger = LogFactory.getLog(getClass());
+  protected final Log LOGGER = LogFactory.getLog(getClass());
 
-  private static final String[] PRINCIPAL_KEYS =
-      new String[] {"user", "username", "userid", "user_id", "login", "id", "name"};
+  private static final String[] PRINCIPAL_KEYS = new String[] {"user", "username", "userid", "user_id", "login", "id", "name"};
 
   private final String userInfoEndpointUrl;
 
@@ -49,7 +45,7 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
 
   private AuthoritiesExtractor authoritiesExtractor = new FixedAuthoritiesExtractor();
 
-  public CustomUserInfoTokenServices(String userInfoEndpointUrl, String clientId) {
+  public ClientServerTokenServices(String userInfoEndpointUrl, String clientId) {
     this.userInfoEndpointUrl = userInfoEndpointUrl;
     this.clientId = clientId;
   }
@@ -67,22 +63,29 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
   }
 
   @Override
-  public OAuth2Authentication loadAuthentication(String accessToken)
-      throws AuthenticationException, InvalidTokenException {
+  public OAuth2Authentication loadAuthentication(String accessToken) {
     Map<String, Object> map = getMap(this.userInfoEndpointUrl, accessToken);
     if (map.containsKey("error")) {
-      this.logger.debug("userinfo returned error: " + map.get("error"));
-      throw new InvalidTokenException(accessToken);
+      LOGGER.error("Get user info returned error >>> " + map.get("error"));
     }
     return extractAuthentication(map);
   }
 
+  @Override
+  public OAuth2AccessToken readAccessToken(String accessToken) {
+    LOGGER.error("Not supported: read access token");
+    return null;
+  }
+  
   private OAuth2Authentication extractAuthentication(Map<String, Object> map) {
     Object principal = getPrincipal(map);
     OAuth2Request request = getRequest(map);
+    if (request == null) {
+      LOGGER.error("Extract authentication from access token error");
+      return null;
+    }
     List<GrantedAuthority> authorities = this.authoritiesExtractor.extractAuthorities(map);
-    UsernamePasswordAuthenticationToken token =
-        new UsernamePasswordAuthenticationToken(principal, "N/A", authorities);
+    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(principal, "N/A", authorities);
     token.setDetails(map);
     return new OAuth2Authentication(request, token);
   }
@@ -97,21 +100,20 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
   }
 
   private OAuth2Request getRequest(Map<String, Object> request) {
-    String clientId = (String) request.get("clientId");
-    String authorities = (String) request.get("authorities");
-    Set<String> auth = new HashSet<>();
-    auth.add(authorities);
-    return new OAuth2Request(null, clientId, null, true, auth, null, null,
-        null, null);
-  }
-
-  @Override
-  public OAuth2AccessToken readAccessToken(String accessToken) {
-    throw new UnsupportedOperationException("Not supported: read access token");
+    try {
+      String clientId = (String) request.get("clientId");
+      String roles = (String) request.get("authorities");
+      Set<String> authorities = new HashSet<>();
+      authorities.add(roles);
+      return new OAuth2Request(null, clientId, null, true, authorities, null, null, null, null);
+    } catch (Exception e) {
+      LOGGER.error("Get request from access token error >>> " + e.getLocalizedMessage());
+      return null;
+    }
   }
 
   private Map<String, Object> getMap(String path, String accessToken) {
-    this.logger.debug("Getting user info from: " + path);
+    this.LOGGER.debug("Getting user info from: " + path);
     try {
       OAuth2RestOperations restTemplate = this.restTemplate;
       if (restTemplate == null) {
@@ -126,10 +128,9 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
         restTemplate.getOAuth2ClientContext().setAccessToken(token);
       }
       HttpEntity<String> entity = new HttpEntity<>(getHeaders());
-      // return restTemplate.getForEntity(path, Map.class).getBody();
       return restTemplate.exchange(path, HttpMethod.POST, entity, Map.class).getBody();
     } catch (Exception ex) {
-      this.logger.info("Could not fetch user details: " + ex.getClass() + ", " + ex.getMessage());
+      LOGGER.error("Could not fetch user details >>> " + ex.getLocalizedMessage());
       return Collections.<String, Object>singletonMap("error", "Could not fetch user details");
     }
   }

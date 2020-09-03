@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AccountController {
+public class TestController {
 
   @PreAuthorize ("hasAnyAuthority('ROLE_SUPER')")
   @RequestMapping(path = "/test1", method = RequestMethod.GET)

@@ -12,10 +12,10 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @EnableOAuth2Client
 //@EnableCircuitBreaker
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class AccountApplication {
+public class UbasApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AccountApplication.class, args);
+		SpringApplication.run(UbasApplication.class, args);
 	}
 
 }
