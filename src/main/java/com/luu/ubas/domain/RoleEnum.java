@@ -2,9 +2,7 @@ package com.luu.ubas.domain;
 
 public enum RoleEnum {
 
-  ROLE_USER("ROLE_USER"),
-  ROLE_ADMIN("ROLE_ADMIN"),
-  ROLE_SUPER("ROLE_SUPER");
+  ROLE_ADMIN("ROLE_ADMIN"), ROLE_DOCTOR("ROLE_DOCTOR"), ROLE_PATIENT("ROLE_PATIENT");
 
   private String meaning;
 

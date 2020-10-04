@@ -9,14 +9,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.client.OAuth2RestOperations;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.BaseOAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Request;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
@@ -101,10 +99,8 @@ public class ClientServerTokenServices implements ResourceServerTokenServices {
 
   private OAuth2Request getRequest(Map<String, Object> request) {
     try {
-      String clientId = (String) request.get("clientId");
-      String roles = (String) request.get("authorities");
       Set<String> authorities = new HashSet<>();
-      authorities.add(roles);
+      authorities.add((String) request.get("authorities"));
       return new OAuth2Request(null, clientId, null, true, authorities, null, null, null, null);
     } catch (Exception e) {
       LOGGER.error("Get request from access token error >>> " + e.getLocalizedMessage());
@@ -119,6 +115,7 @@ public class ClientServerTokenServices implements ResourceServerTokenServices {
       if (restTemplate == null) {
         BaseOAuth2ProtectedResourceDetails resource = new BaseOAuth2ProtectedResourceDetails();
         resource.setClientId(this.clientId);
+        resource.setAccessTokenUri(accessToken);
         restTemplate = new OAuth2RestTemplate(resource);
       }
       OAuth2AccessToken existingToken = restTemplate.getOAuth2ClientContext().getAccessToken();
@@ -127,7 +124,7 @@ public class ClientServerTokenServices implements ResourceServerTokenServices {
         token.setTokenType(this.tokenType);
         restTemplate.getOAuth2ClientContext().setAccessToken(token);
       }
-      HttpEntity<String> entity = new HttpEntity<>(getHeaders());
+      HttpEntity<Object> entity = new HttpEntity<>(getHeaders());
       return restTemplate.exchange(path, HttpMethod.POST, entity, Map.class).getBody();
     } catch (Exception ex) {
       LOGGER.error("Could not fetch user details >>> " + ex.getLocalizedMessage());

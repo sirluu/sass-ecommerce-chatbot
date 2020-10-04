@@ -50,7 +50,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/test2").permitAll()
-                .antMatchers("/test4").hasAnyAuthority(RoleEnum.ROLE_SUPER.name())
+                .antMatchers("/test1").hasAnyAuthority(RoleEnum.ROLE_ADMIN.name())
+                .antMatchers("/test3").hasAnyAuthority(RoleEnum.ROLE_PATIENT.name())
+                .antMatchers("/test4").hasAnyAuthority(RoleEnum.ROLE_DOCTOR.name())
                 .anyRequest().authenticated();
     }
 }

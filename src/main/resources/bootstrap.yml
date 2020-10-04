@@ -3,7 +3,7 @@ spring:
     name: luu-ubas
   cloud:
     config:
-      uri: http://ec2-3-135-9-238.us-east-2.compute.amazonaws.com:9999
+      uri: http://178.62.90.171:9999
       fail-fast: true
       retry:
         initial-interval: 2000
