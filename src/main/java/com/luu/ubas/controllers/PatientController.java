@@ -44,10 +44,10 @@ import io.swagger.annotations.ApiParam;
  * @author titchip
  *
  */
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("patients")
 @Api(tags = "Patient Controlleur", value = "Patient Management System")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class PatientController {
 
   private final static Logger logger = LoggerFactory.getLogger(PatientController.class);

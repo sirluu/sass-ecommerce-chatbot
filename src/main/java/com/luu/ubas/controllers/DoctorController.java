@@ -54,7 +54,7 @@ import io.swagger.annotations.ApiParam;
 @RestController
 @RequestMapping("doctors")
 @Api(tags = "Doctor Controlleur", value = "Doctors Management System")
-@CrossOrigin(origins = "*", maxAge = 3600) // TODO change this for security reasons
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class DoctorController {
 
   private final static Logger logger = (Logger) LoggerFactory.getLogger(DoctorController.class);

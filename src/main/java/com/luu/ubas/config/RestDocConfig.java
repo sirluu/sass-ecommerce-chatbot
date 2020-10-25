@@ -26,7 +26,7 @@ public class RestDocConfig {
   @Bean
   public Docket api() {
     return new Docket(DocumentationType.SWAGGER_2).select()
-        .apis(RequestHandlerSelectors.basePackage("com.mustadev.telemed.controllers"))
+        .apis(RequestHandlerSelectors.basePackage("com.luu.ubas.controllers"))
         .paths(PathSelectors.regex("/.*")).build().apiInfo(apiEndPointsInfo());
   }
 
@@ -34,7 +34,7 @@ public class RestDocConfig {
 
     return new ApiInfoBuilder().title("TeleMed REST API").description("TeleMed Projet Rest API ")
         .contact(new Contact("HungLQ", "github.com/sirluu", "hunglq7130@github.com"))
-        .license("HungLQ ").licenseUrl("http://www.mustadev.com/licenses/LICENSE-2.0.html")
+        .license("HungLQ ").licenseUrl("http://www.luuquanghung.com/licenses/LICENSE-2.0.html")
         .version("1.0.0").build();
   }
 
