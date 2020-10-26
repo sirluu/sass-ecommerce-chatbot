@@ -5,11 +5,9 @@ import java.util.Date;
 
 
 /**
- * un class pour représenter les erreurs
  * 
- * @author Mustapha De BrainStormers
- * @since 13-03-2020
- * 
+ * @author HungLQ7130
+ *
  */
 public class ErrorDetails {
 

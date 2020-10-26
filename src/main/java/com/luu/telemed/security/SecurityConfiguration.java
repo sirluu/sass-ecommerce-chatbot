@@ -32,91 +32,74 @@ import com.luu.telemed.security.services.PatientDetailsServiceImpl;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-  @Autowired
-  AdminDetailsServiceImpl adminDetailsService;
-  @Autowired
-  DoctorDetailsServiceImpl doctorDetailsService;
-  @Autowired
-  PatientDetailsServiceImpl patientDetailsService;
+	@Autowired
+	AdminDetailsServiceImpl adminDetailsService;
+	@Autowired
+	DoctorDetailsServiceImpl doctorDetailsService;
+	@Autowired
+	PatientDetailsServiceImpl patientDetailsService;
 
-  @Autowired
-  private AuthEntryPointJwt unauthorizedHandler;
+	@Autowired
+	private AuthEntryPointJwt unauthorizedHandler;
 
-  @Bean
-  public AuthTokenFilter authenticationJwtTokenFilter() {
-    return new AuthTokenFilter();
-  }
+	@Bean
+	public AuthTokenFilter authenticationJwtTokenFilter() {
+		return new AuthTokenFilter();
+	}
 
-  @Override
-  public void configure(AuthenticationManagerBuilder authenticationManagerBuilder)
-      throws Exception {
-    authenticationManagerBuilder.authenticationProvider(getAdminAuthenticationProvider());
-    authenticationManagerBuilder.authenticationProvider(getDoctorAuthenticationProvider());
-    authenticationManagerBuilder.authenticationProvider(getPatientAuthenticationProvider());
+	@Override
+	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+		authenticationManagerBuilder.authenticationProvider(getAdminAuthenticationProvider());
+		authenticationManagerBuilder.authenticationProvider(getDoctorAuthenticationProvider());
+		authenticationManagerBuilder.authenticationProvider(getPatientAuthenticationProvider());
 
-  }
+	}
 
-  // @Bean
-  // @Override
-  // public AuthenticationManager authenticationManagerBean() throws Exception {
-  // return super.authenticationManagerBean();
-  // }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+				.antMatchers("/api/auth/**").permitAll().antMatchers("/api/test/**").permitAll()
+				.antMatchers("/doctors/**").permitAll().antMatchers("/patients/**").permitAll()
+				.antMatchers("/clinics/**").permitAll().antMatchers("/socket/**").permitAll().antMatchers("/**")
+				.permitAll().anyRequest().authenticated();
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http.cors().and().csrf().disable().exceptionHandling()
-        .authenticationEntryPoint(unauthorizedHandler).and().sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+	}
 
-        .antMatchers("/api/auth/**").permitAll().antMatchers("/api/test/**").permitAll()
-        .antMatchers("/doctors/**").permitAll().antMatchers("/patients/**").permitAll()
-        .antMatchers("/clinics/**").permitAll().antMatchers("/**").permitAll()
-        .antMatchers("/socket**").permitAll()
-        // just to reload.
-        .anyRequest().authenticated();
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/v2/api-docs").antMatchers("/swagger-resources/**").antMatchers("/swagger-ui.html")
+				.antMatchers("/configuration/**").antMatchers("/webjars/**").antMatchers("/public");
 
-    http.addFilterBefore(authenticationJwtTokenFilter(),
-        UsernamePasswordAuthenticationFilter.class);
-  }
+	}
 
-  @Override
-  public void configure(WebSecurity web) throws Exception {
-    // Allow swagger to be accessed without authentication
-    web.ignoring().antMatchers("/v2/api-docs")//
-        .antMatchers("/swagger-resources/**")//
-        .antMatchers("/swagger-ui.html")//
-        .antMatchers("/configuration/**")//
-        .antMatchers("/webjars/**")//
-        .antMatchers("/public");
+	@Bean
+	public AdminAuthenticationProvider getAdminAuthenticationProvider() {
+		AdminAuthenticationProvider dao = new AdminAuthenticationProvider();
+		dao.setUserDetailsService(adminDetailsService);
+		dao.setPasswordEncoder(passwordEncoder());
+		return dao;
+	}
 
-  }
+	@Bean
+	public DoctorAuthenticationProvider getDoctorAuthenticationProvider() {
+		DoctorAuthenticationProvider dao = new DoctorAuthenticationProvider();
+		dao.setUserDetailsService(doctorDetailsService);
+		dao.setPasswordEncoder(passwordEncoder());
+		return dao;
+	}
 
-  @Bean
-  public AdminAuthenticationProvider getAdminAuthenticationProvider() {
-    AdminAuthenticationProvider dao = new AdminAuthenticationProvider();
-    dao.setUserDetailsService(adminDetailsService);
-    dao.setPasswordEncoder(passwordEncoder());
-    return dao;
-  }
-
-  @Bean
-  public DoctorAuthenticationProvider getDoctorAuthenticationProvider() {
-    DoctorAuthenticationProvider dao = new DoctorAuthenticationProvider();
-    dao.setUserDetailsService(doctorDetailsService);
-    dao.setPasswordEncoder(passwordEncoder());
-    return dao;
-  }
-
-  @Bean
-  public PatientAuthenticationProvider getPatientAuthenticationProvider() {
-    PatientAuthenticationProvider dao = new PatientAuthenticationProvider();
-    dao.setUserDetailsService(patientDetailsService);
-    dao.setPasswordEncoder(passwordEncoder());
-    return dao;
-  }
+	@Bean
+	public PatientAuthenticationProvider getPatientAuthenticationProvider() {
+		PatientAuthenticationProvider dao = new PatientAuthenticationProvider();
+		dao.setUserDetailsService(patientDetailsService);
+		dao.setPasswordEncoder(passwordEncoder());
+		return dao;
+	}
 }

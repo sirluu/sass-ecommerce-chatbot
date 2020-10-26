@@ -9,11 +9,9 @@ import com.luu.telemed.models.Appointment;
 
 
 /**
- * cet interface hérite {@link MongoRepository MongoRepository.class}
  * 
- * @author Ayoub BenHaimoud<ayoubbenhaimoud@gmail.com>
- * @since 17-03-2020
- * 
+ * @author HungLQ7130
+ *
  */
 @Repository
 public interface AppointmentRepository extends MongoRepository<Appointment, String> {

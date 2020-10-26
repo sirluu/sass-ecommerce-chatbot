@@ -24,7 +24,6 @@ public interface DoctorRepository extends MongoRepository<Doctor, String> {
   @Query("{ 'clinic.city' : { $regex: ?0 , '$options' : 'i'} }")
   List<Doctor> searchByCity(String query, Sort sort);
 
-  // $text: { $search: "clinic" }
   @Query("{$text: { $search: ?0 }, 'clinic.city': {$regex: ?1 , '$options' : 'i'} }")
   List<Doctor> search(String query, String city, Sort sort);
 
