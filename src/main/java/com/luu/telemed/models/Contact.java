@@ -6,11 +6,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * Contacts
  * 
- * @author Belaid Atif
- * @since version 0.0.2
- * 
+ * @author HungLQ7130
+ *
  */
 @Document(collection = "contacts")
 public class Contact {

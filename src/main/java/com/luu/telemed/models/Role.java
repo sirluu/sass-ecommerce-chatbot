@@ -4,11 +4,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * rôles d'utilisateur
  * 
- * @author Mustapha De BrainStormers
- * @since version 0.0.2
- * 
+ * @author HungLQ7130
+ *
  */
 @Document(collection = "roles")
 public class Role {
@@ -37,7 +35,5 @@ public class Role {
   public void setName(ERole name) {
     this.name = name;
   }
-
-
 
 }

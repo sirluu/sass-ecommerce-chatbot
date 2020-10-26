@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -11,194 +12,173 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * La Clinique
  * 
- * @author Mustapha De BrainStormers
- * @since version 0.0.2
- * 
+ * @author HungLQ7130
+ *
  */
 @ApiModel(description = "Clinic details")
-// @Document("clinics")
+@Document("clinics")
 public class Clinic {
 
-  // /**
-  // * ID de Clinique
-  // */
-  // @ApiModelProperty(notes = "Clinique ID")
-  // @Id
-  // private String id;
+	@ApiModelProperty(notes = "Nom de clinique")
 
-  // /**
-  // * ID de Clinique
-  // */
-  // @ApiModelProperty(notes = "Doctor ID")
-  // private String doctorId;
-  /**
-   * Nom de clinique
-   */
-  @ApiModelProperty(notes = "Nom de clinique")
+	private String name = "";
+	/**
+	 * Description de clinique
+	 */
+	@ApiModelProperty(notes = "Description de clinique")
+	private String description = "";
+	/**
+	 * Prix de consultation de clinique
+	 */
+	@ApiModelProperty(notes = "Prix de consultation de clinique")
+	private float consultPrice = 0.0f;
+	/**
+	 * Prix minimum
+	 */
+	@ApiModelProperty(notes = "Prix minimum")
+	private int minPrice = 0;
+	/**
+	 * Prix maximum
+	 */
+	@ApiModelProperty(notes = "Prix maximum")
+	private int maxPrice = 0;
+	/**
+	 * Services de clinique
+	 */
+	@ApiModelProperty(notes = "Services de clinique")
+	private List<String> services = new ArrayList<>();
+	/**
+	 * Specialities de clinique
+	 */
+	@ApiModelProperty(notes = "Specialities de clinique")
+	private List<String> specialities = new ArrayList<>();
+	/**
+	 * Ville de clinique
+	 */
+	@ApiModelProperty(notes = "Ville de clinique")
+	private String city = "";
+	/**
+	 * Pays de clinique
+	 */
+	@ApiModelProperty(notes = "Pays de clinique")
+	private String country = "";
 
-  private String name = "";
-  /**
-   * Description de clinique
-   */
-  @ApiModelProperty(notes = "Description de clinique")
-  private String description = "";
-  /**
-   * Prix de consultation de clinique
-   */
-  @ApiModelProperty(notes = "Prix de consultation de clinique")
-  private float consultPrice = 0.0f;
-  /**
-   * Prix minimum
-   */
-  @ApiModelProperty(notes = "Prix minimum")
-  private int minPrice = 0;
-  /**
-   * Prix maximum
-   */
-  @ApiModelProperty(notes = "Prix maximum")
-  private int maxPrice = 0;
-  /**
-   * Services de clinique
-   */
-  @ApiModelProperty(notes = "Services de clinique")
-  private List<String> services = new ArrayList<>();
-  /**
-   * Specialities de clinique
-   */
-  @ApiModelProperty(notes = "Specialities de clinique")
-  private List<String> specialities = new ArrayList<>();
-  /**
-   * Ville de clinique
-   */
-  @ApiModelProperty(notes = "Ville de clinique")
-  private String city = "";
-  /**
-   * Pays de clinique
-   */
-  @ApiModelProperty(notes = "Pays de clinique")
-  private String country = "";
+	/**
+	 * address de clinique
+	 */
+	@ApiModelProperty(notes = "Address de clinique")
+	private String address = "";
 
-  /**
-   * address de clinique
-   */
-  @ApiModelProperty(notes = "Address de clinique")
-  private String address = "";
+	/**
+	 * Emplacement de la carte de clinique
+	 */
+	@ApiModelProperty(notes = "Emplacement de la carte de clinique")
+	private ClinicLocation location = new ClinicLocation(30.0f, -10.0f, 12);
 
-  /**
-   * Emplacement de la carte de clinique
-   */
-  @ApiModelProperty(notes = "Emplacement de la carte de clinique")
-  private ClinicLocation location = new ClinicLocation(30.0f, -10.0f, 12);
+	/**
+	 * Id des images de clinique
+	 */
 
-  /**
-   * Id des images de clinique
-   */
+	@ApiModelProperty(notes = "Id des images de clinique")
+	@DBRef
+	@JsonIgnore
+	private List<Photo> photos = new ArrayList<Photo>();
 
-  @ApiModelProperty(notes = "Id des images de clinique")
-  @DBRef
-  @JsonIgnore
-  private List<Photo> photos = new ArrayList<Photo>();
+	public String getName() {
+		return name;
+	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
 
+	public String getDescription() {
+		return description;
+	}
 
-  public String getName() {
-    return name;
-  }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-  public void setName(String name) {
-    this.name = name;
-  }
+	public float getConsultPrice() {
+		return consultPrice;
+	}
 
-  public String getDescription() {
-    return description;
-  }
+	public void setConsultPrice(float consultPrice) {
+		this.consultPrice = consultPrice;
+	}
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+	public int getMinPrice() {
+		return minPrice;
+	}
 
-  public float getConsultPrice() {
-    return consultPrice;
-  }
+	public void setMinPrice(int minPrice) {
+		this.minPrice = minPrice;
+	}
 
-  public void setConsultPrice(float consultPrice) {
-    this.consultPrice = consultPrice;
-  }
+	public int getMaxPrice() {
+		return maxPrice;
+	}
 
-  public int getMinPrice() {
-    return minPrice;
-  }
+	public void setMaxPrice(int maxPrice) {
+		this.maxPrice = maxPrice;
+	}
 
-  public void setMinPrice(int minPrice) {
-    this.minPrice = minPrice;
-  }
+	public List<String> getServices() {
+		return services;
+	}
 
-  public int getMaxPrice() {
-    return maxPrice;
-  }
+	public void setServices(List<String> services) {
+		this.services = services;
+	}
 
-  public void setMaxPrice(int maxPrice) {
-    this.maxPrice = maxPrice;
-  }
+	public List<String> getSpecialities() {
+		return specialities;
+	}
 
-  public List<String> getServices() {
-    return services;
-  }
+	public void setSpecialities(List<String> specialities) {
+		this.specialities = specialities;
+	}
 
-  public void setServices(List<String> services) {
-    this.services = services;
-  }
+	public String getCity() {
+		return city;
+	}
 
-  public List<String> getSpecialities() {
-    return specialities;
-  }
+	public void setCity(String city) {
+		this.city = city;
+	}
 
-  public void setSpecialities(List<String> specialities) {
-    this.specialities = specialities;
-  }
+	public String getCountry() {
+		return country;
+	}
 
-  public String getCity() {
-    return city;
-  }
+	public void setCountry(String country) {
+		this.country = country;
+	}
 
-  public void setCity(String city) {
-    this.city = city;
-  }
+	public String getAddress() {
+		return address;
+	}
 
-  public String getCountry() {
-    return country;
-  }
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-  public void setCountry(String country) {
-    this.country = country;
-  }
+	public ClinicLocation getLocation() {
+		return location;
+	}
 
-  public String getAddress() {
-    return address;
-  }
+	public void setLocation(ClinicLocation location) {
+		this.location = location;
+	}
 
-  public void setAddress(String address) {
-    this.address = address;
-  }
+	public List<Photo> getPhotos() {
+		return photos;
+	}
 
-  public ClinicLocation getLocation() {
-    return location;
-  }
-
-  public void setLocation(ClinicLocation location) {
-    this.location = location;
-  }
-
-  public List<Photo> getPhotos() {
-    return photos;
-  }
-
-  public void setPhotos(List<Photo> photos) {
-    this.photos = photos;
-  }
-
-
+	public void setPhotos(List<Photo> photos) {
+		this.photos = photos;
+	}
 
 }

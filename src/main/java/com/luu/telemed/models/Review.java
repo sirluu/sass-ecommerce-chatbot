@@ -56,14 +56,9 @@ public class Review {
   @Min(1)
   private int rating = 1;
 
-
   /******** Getters and Setter and Constructors ********/
 
-
-
   public Review() {}
-
-
 
   public String getId() {
     return id;
@@ -81,7 +76,6 @@ public class Review {
     this.content = content;
   }
 
-
   public Set<Like> getLikes() {
     return likes;
   }
@@ -94,12 +88,9 @@ public class Review {
     return rating;
   }
 
-
   public void setRating(int rating) {
     this.rating = rating;
   }
-
-
 
   public String getPatientId() {
     return patientId;

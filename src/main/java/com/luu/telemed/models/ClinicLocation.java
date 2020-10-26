@@ -11,14 +11,12 @@ public class ClinicLocation {
   @NotNull
   private int zoom;
 
-
   public ClinicLocation(@NotNull float latitude, @NotNull float longitude, @NotNull int zoom) {
     super();
     this.latitude = latitude;
     this.longitude = longitude;
     this.zoom = zoom;
   }
-
 
   public ClinicLocation() {}
 
@@ -46,6 +44,5 @@ public class ClinicLocation {
   public void setZoom(int zoom) {
     this.zoom = zoom;
   }
-
 
 }

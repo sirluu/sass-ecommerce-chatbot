@@ -1,6 +1,5 @@
 package com.luu.telemed.models;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,12 +18,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * Modele Patient {@link Patient Patient.class} c'est une classe "Patient" qui constitue toutes les
- * attributes nécessaire pour un Patient
  * 
- * @author Ayoub BenHaimoud<ayoubbenhaimoud@gmail.com>
- * @since 18-03-2020
- * 
+ * @author HungLQ7130
+ *
  */
 @ApiModel(description = "Détails du Patient")
 @Document(collection = "patients")
@@ -69,7 +65,6 @@ public class Patient {
   @Size(max = 30)
   private String password;
 
-
   /**
    * Email d'utilisateur
    */
@@ -104,160 +99,117 @@ public class Patient {
   @JsonIgnore
   private Set<Role> roles = new HashSet<>();
 
-
   /*********** Getter and Setters and Constructors **************/
 
-
-
   public Patient() {}
-
 
   public String getId() {
     return id;
   }
 
-
-
   public void setId(String id) {
     this.id = id;
   }
-
-
 
   public String getFirstname() {
     return firstname;
   }
 
-
-
   public void setFirstname(String firstname) {
     this.firstname = firstname;
   }
-
-
 
   public String getLastname() {
     return lastname;
   }
 
-
-
   public void setLastname(String lastname) {
     this.lastname = lastname;
   }
-
-
 
   public String getUsername() {
     return username;
   }
 
-
-
   public void setUsername(String username) {
     this.username = username;
   }
-
 
   public String getPassword() {
     return password;
   }
 
-
-
   public void setPassword(String password) {
     this.password = password;
   }
-
-
 
   public String getBirthday() {
     return birthday;
   }
 
-
   public void setBirthday(String birthday) {
     this.birthday = birthday;
   }
-
 
   public String getPhone() {
     return phone;
   }
 
-
   public void setPhone(String phone) {
     this.phone = phone;
   }
-
 
   public String getBloodGroup() {
     return bloodGroup;
   }
 
-
   public void setBloodGroup(String bloodGroup) {
     this.bloodGroup = bloodGroup;
   }
-
 
   public String getCountry() {
     return country;
   }
 
-
   public void setCountry(String country) {
     this.country = country;
   }
-
 
   public String getCity() {
     return city;
   }
 
-
   public void setCity(String city) {
     this.city = city;
   }
-
 
   public String getAddress() {
     return address;
   }
 
-
   public void setAddress(String address) {
     this.address = address;
   }
-
 
   public String getZipCode() {
     return zipCode;
   }
 
-
   public void setZipCode(String zipCode) {
     this.zipCode = zipCode;
   }
-
 
   public String getEmail() {
     return email;
   }
 
-
-
   public void setEmail(String email) {
     this.email = email;
   }
 
-
-
   public Set<Role> getRoles() {
     return roles;
   }
-
-
 
   public void setRoles(Set<Role> roles) {
     this.roles = roles;
@@ -270,7 +222,5 @@ public class Patient {
   public void setAvatar(Photo avatar) {
     this.avatar = avatar;
   }
-
-
 
 }

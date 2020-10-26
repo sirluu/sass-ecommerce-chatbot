@@ -18,15 +18,12 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * classe "Admin"
  * 
- * @author Mustapha mustadev
- * @since version 0.0.2
- * 
+ * @author HungLQ7130
+ *
  */
 @ApiModel(description = "Détails du Admin")
 @Document(collection = "admins")
-// @Data @ToString @AllArgsConstructor @NoArgsConstructor
 public class Admin {
 
   /**
@@ -101,15 +98,11 @@ public class Admin {
     this.roles = roles;
   }
 
-
   public Admin() {}
-
 
   public String getId() {
     return id;
   }
-
-
 
   public void setId(String id) {
     this.id = id;
@@ -162,7 +155,5 @@ public class Admin {
   public void setRoles(Set<Role> roles) {
     this.roles = roles;
   }
-
-
 
 }
