@@ -5,11 +5,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.luu</groupId>
-	<artifactId>ubas</artifactId>
+	<artifactId>telemed</artifactId>
 	<version>4.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>luu-ubas</name>
-	<description>luu-ubas</description>
+	<name>luu-telemed</name>
+	<description>luu-telemed</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

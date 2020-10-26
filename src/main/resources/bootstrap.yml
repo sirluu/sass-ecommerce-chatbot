@@ -1,6 +1,6 @@
 spring:
   application:
-    name: luu-ubas
+    name: luu-telemed
   cloud:
     config:
       uri: http://178.62.90.171:9999
