@@ -2,8 +2,8 @@
 
 A full-stack e-commerce platform featuring an intelligent AI shopping assistant, vector-based product search with Pinecone, and a modern React/Next.js frontend. **Chatbot with advanced product search, recommendations, and order/cart management.**
 
-![alt text](.github/res/image-1.png)
-![alt text](.github/res/image.png)
+![alt text](res/image-1.png)
+![alt text](res/image.png)
 
 ## Features
 
