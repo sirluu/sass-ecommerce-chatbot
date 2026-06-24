@@ -77,6 +77,10 @@ A full-stack e-commerce platform featuring an intelligent AI shopping assistant,
 - Update documentation
 - Ensure code passes linting
 
+## Deployment
+
+Hướng dẫn build và deploy frontend lên **Vercel**, backend lên **Railway**: [docs/DEPLOY.md](docs/DEPLOY.md).
+
 ## License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
